@@ -12,7 +12,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 
 chromedriver = "/Applications/chromedriver" # Path to the chromedriver executable
 os.environ["webdriver.chrome.driver"] = chromedriver

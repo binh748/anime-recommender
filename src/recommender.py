@@ -56,3 +56,32 @@ def get_content_filt_recs(user_id, dist_matrix,
             if anime_titles[idx] not in
             get_user_anime_history(user_id, user_anime_history_df)][:num_recs]
     return recs
+
+
+def rec_score(user_id, user_anime_cosine_distances_content,
+              user_anime_cosine_distances_collab, user_score_df,
+              user_anime_history_df, anime_titles, collab_weight=1):
+    rec_score_dicts = []
+    collab_recs = get_collab_filt_recs(user_id, user_anime_cosine_distances_collab,
+                                       anime_titles, user_score_df)
+    content_recs = get_content_filt_recs(user_id, user_anime_cosine_distances_content,
+                                         anime_titles, user_anime_history_df)
+    for idx, (collab_rec, content_rec) in enumerate(zip(collab_recs, content_recs)):
+        rec_score_dict_collab = {
+            'user_id': user_id,
+            'anime_rec': collab_rec,
+            'rec_type': 'collab',
+            'original_rank': idx+1,
+            'base_score': 10-idx,
+            'weighted_score': (10-idx)*collab_weight
+        }
+        rec_score_dict_content = {
+            'user_id': user_id,
+            'anime_rec': content_rec,
+            'rec_type': 'content',
+            'original_rank': idx+1,
+            'base_score': 10-idx,
+            'weighted_score': 10-idx
+        }
+        rec_score_dicts = rec_score_dicts + [rec_score_dict_collab] + [rec_score_dict_content]
+    return rec_score_dicts

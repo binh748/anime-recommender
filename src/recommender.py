@@ -1,5 +1,7 @@
 """This module contains functions for the anime recommender system."""
-
+import pandas as pd
+# Considering using default variables for these functions by loading up
+# their pickles to avoid typing all the arguments each time
 
 def get_user_scores(user_id, user_score_df):
     """Returns dictionary of all non-zero user scores, including
@@ -58,16 +60,24 @@ def get_content_filt_recs(user_id, dist_matrix,
     return recs
 
 
-def rec_score(user_id, user_anime_cosine_distances_content,
+def recommend(user_id, user_anime_cosine_distances_content,
               user_anime_cosine_distances_collab, user_score_df,
-              user_anime_history_df, anime_titles, collab_weight=1):
-    rec_score_dicts = []
+              user_anime_history_df, anime_titles, collab_weight=1,
+              num_recs=10):
+    """Makes anime recommendations based on user_id and scoring logic.
+
+    Returns:
+        recs: Recommendations as a list of anime where the list length equals
+        the parameter num_recs. List is sorted with top recommendations first.
+        recs_df: Recommendations as a df with all details.
+    """
+    rec_dicts = []
     collab_recs = get_collab_filt_recs(user_id, user_anime_cosine_distances_collab,
                                        anime_titles, user_score_df)
     content_recs = get_content_filt_recs(user_id, user_anime_cosine_distances_content,
                                          anime_titles, user_anime_history_df)
     for idx, (collab_rec, content_rec) in enumerate(zip(collab_recs, content_recs)):
-        rec_score_dict_collab = {
+        rec_dict_collab = {
             'user_id': user_id,
             'anime_rec': collab_rec,
             'rec_type': 'collab',
@@ -75,7 +85,7 @@ def rec_score(user_id, user_anime_cosine_distances_content,
             'base_score': 10-idx,
             'weighted_score': (10-idx)*collab_weight
         }
-        rec_score_dict_content = {
+        rec_dict_content = {
             'user_id': user_id,
             'anime_rec': content_rec,
             'rec_type': 'content',
@@ -83,5 +93,10 @@ def rec_score(user_id, user_anime_cosine_distances_content,
             'base_score': 10-idx,
             'weighted_score': 10-idx
         }
-        rec_score_dicts = rec_score_dicts + [rec_score_dict_collab] + [rec_score_dict_content]
-    return rec_score_dicts
+        rec_dicts = rec_dicts + [rec_dict_collab] + [rec_dict_content]
+    # Sort recommendations by weighted_score
+    recs_df = pd.DataFrame(rec_dicts).sort_values('weighted_score',
+                                                  ascending=False,
+                                                  ignore_index=True)
+    recs = recs_df.iloc[0:num_recs]['anime_rec'].values.tolist()
+    return recs, recs_df

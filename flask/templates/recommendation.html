@@ -15,51 +15,59 @@
         <tr>
           <th>#</th>
           <th>Image</th>
-          <th class="anime_title">Anime Title</th>
+          <th class="anime-title">Anime Title</th>
         </tr>
       </thead>
       {% for rec in recs %}
       <tbody>
         <tr>
-          <td>{{ loop.index0+1 }}</td>
-          <td>None</td>
-          <td class="anime_title">{{ rec }}</td>
+          <td class="anime-rank">{{ loop.index0+1 }}</td>
+          <td class="anime-image">
+            <a href={{ rec['url'] }} target="_blank">
+              <img src={{ rec['image_url'] }} class="anime-image">
+            </a>
+          </td>
+          <td class="anime-title">
+            <a href={{ rec['url'] }} target="_blank">
+              {{ rec['anime_title'] }}
+            </a>
+          </td>
         </tr>
       </tbody>
       {% endfor %}
     </table>
     <br>
+    <div class="right-of-table">
 
-    <form action="" method="post">
-      <p>Recommendation Type:</p>
-      <!-- Default CSS slider with a width customization defined in my stylesheet -->
-      <div class="slidecontainer">
-        <input id="rec_slider" name="adventurous_level" type="range" min="0" max="2" value={{adventurous_level}} step="0.1" class="slider">
-        <br>
-        <!-- Labels for slider -->
-        <div class="same_line">
-            <div class="slider_label_left">Less Adventurous</div>
-            <div class="slider_label_center">Balanced</div>
-            <div class="slider_label_right">More Adventurous</div>
+      <form action="" method="post">
+        <div>
+          <label for="user_id">MyAnimeList User ID:</label>
+          <br>
+          <input type="text" name="user_id" value={{ user_id }}>
         </div>
-      </div>
-      <br>
-      <div>
-        <label for="user_id">MyAnimeList User ID:</label>
+        <p>Recommendation Type:</p>
+        <!-- Default CSS slider with a width customization defined in my stylesheet -->
+        <div class="slidecontainer">
+          <input id="rec_slider" name="adventurous_level" type="range" min="0" max="2" value="1" step="0.1" class="slider">
+          <br>
+          <!-- Labels for slider -->
+          <div class="same-line">
+              <div class="slider-label-left">Less Adventurous</div>
+              <div class="slider-label-center">Balanced</div>
+              <div class="slider-label-right">More Adventurous</div>
+          </div>
+        </div>
         <br>
-        <input type="text" name="user_id" value={{user_id}}>
-      </div>
-      <br>
-      <div>
-        <input type="submit" value="Recommend" onclick="$('#loading').show();">
-      </div>
-    </form>
+        <div>
+          <input type="submit" value="Recommend" onclick="$('#loading').show();">
+        </div>
+        <br>
+      </form>
 
-    <div id="loading" style="display:none;"><img src="{{ url_for('static', filename='ajax-loader.gif') }}" alt="A loading gif">
-      <br>
-      Loading...
+      <div id="loading" class="loading-gif" style="display:none;"><img src="{{ url_for('static', filename='ajax-loader.gif') }}" alt="A loading gif">
+        <br>
+        <div class="loading-text">Loading...</div>
+      </div>
     </div>
-
-
   </body>
 </html>

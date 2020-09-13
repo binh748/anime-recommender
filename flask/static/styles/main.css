@@ -1,15 +1,43 @@
-html {
+body {
   font-family: sans-serif;
+  font-size: large;
+  background-color: lightblue;
 }
 
-#loading {
-  margin: auto;
-  width: 50%;
-  text-align: center;
+input[type=text] {
+    width: 12.8em;
+    height: 1em;
+    font-size: medium;
 }
 
+input[type=submit] {
+    width: 13.3em;
+    height: 2em;
+    font-size: medium;
+}
+
+/* Need absolute position to ignore the table element */
+div.right-of-table {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+}
+
+/* The below two styles show how I can change the position of a child element relative
+to the parent element */
+.loading-gif {
+  position: relative;
+}
+
+.loading-text {
+  position: absolute;
+  left: 75px;
+}
+
+/* I fixed the width because otherwise it kept on changing size
+for some weird reason when I click "Recommend" */
 .slidecontainer {
-  width: 25%; /* Width of the outside container */
+  width: 350px; /* Width of the outside container */
 }
 
 /* The slider itself */
@@ -20,30 +48,30 @@ html {
 /* Took below code on positioning inline text from Stack Overflow:
 https://stackoverflow.com/questions/13694062/css-left-center-right-align-text-on-same-line */
 
-.same_line {
+.same-line {
   height: 10px;
   position: relative;
 }
 
-.same_line div{
+.same-line div{
   display: inline-block;
   position: absolute;
 }
 
-.slider_label_left {
-  font-size: smaller;
+.slider-label-left {
+  font-size: small;
   left: 0px;
 }
 
-.slider_label_center {
-  font-size: smaller;
+.slider-label-center {
+  font-size: small;
   left: 0%;
   right: 0%;
   text-align: center;
 }
 
-.slider_label_right {
-  font-size: smaller;
+.slider-label-right {
+  font-size: small;
   right: 0px;
 }
 
@@ -60,23 +88,39 @@ tbody {
 }
 
 table {
+    width: 40%; /* Keeps the table width constant at a percentage of the page width */
     border-collapse: collapse;
     border: 2px solid rgb(200, 200, 200);
     letter-spacing: 1px;
     font-family: sans-serif;
-    font-size: .8rem;
+    font-size: 1.2rem;
 }
 
 td,
 th {
     border: 1px solid rgb(190, 190, 190);
     padding: 5px 10px;
-}
-
-td {
     text-align: center;
 }
 
-.anime_title {
+td.anime-rank {
+  width: 5%;
+}
+
+td.anime-image {
+  width: 25%;
+}
+
+/* Control image size using maximum size boundaries and still
+maintain proportion */
+img.anime-image {
+    height: auto;
+    width: auto;
+    max-width: 125px;
+    max-height: 125px;
+}
+
+td.anime-title {
+  width: 70%;
   text-align: left;
 }

@@ -1,0 +1,42 @@
+#loading {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+.slidecontainer {
+  width: 25%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  width: 100%; /* Full-width of the outside container */
+}
+
+/* Took below code on positioning inline text from Stack Overflow */
+.same_line {
+  height: 10px;
+  position: relative;
+}
+
+.same_line div{
+  display: inline-block;
+  position: absolute;
+}
+
+.slider_label_left {
+  font-size: smaller;
+  left: 0px;
+}
+
+.slider_label_center {
+  font-size: smaller;
+  left: 0%;
+  right: 0%;
+  text-align: center;
+}
+
+.slider_label_right {
+  font-size: smaller;
+  right: 0px;
+}

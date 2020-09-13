@@ -1,3 +1,7 @@
+html {
+  font-family: sans-serif;
+}
+
 #loading {
   margin: auto;
   width: 50%;
@@ -13,7 +17,9 @@
   width: 100%; /* Full-width of the outside container */
 }
 
-/* Took below code on positioning inline text from Stack Overflow */
+/* Took below code on positioning inline text from Stack Overflow:
+https://stackoverflow.com/questions/13694062/css-left-center-right-align-text-on-same-line */
+
 .same_line {
   height: 10px;
   position: relative;
@@ -39,4 +45,38 @@
 .slider_label_right {
   font-size: smaller;
   right: 0px;
+}
+
+/* Took below code on table styling from Mozilla:
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/tfoot */
+
+thead {
+    background-color: #3f87a6;
+    color: #fff;
+}
+
+tbody {
+    background-color: #e4f0f5;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rgb(200, 200, 200);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: .8rem;
+}
+
+td,
+th {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 5px 10px;
+}
+
+td {
+    text-align: center;
+}
+
+.anime_title {
+  text-align: left;
 }

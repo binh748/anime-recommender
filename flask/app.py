@@ -20,6 +20,8 @@ def recommendation(user_id, adventurous_level):
                             user_anime_cosine_distances_collab, user_score_df,
                             user_anime_history_df, anime_titles,
                             collab_weight=float(adventurous_level))
+    # Need to create a list of dicts storing the anime_title and image_url
+    # and then pass list of dicts into render_template to display anime title and image    
     return render_template('recommendation.html', recs=recs, user_id=user_id,
                            adventurous_level=adventurous_level)
 

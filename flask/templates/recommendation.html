@@ -10,13 +10,28 @@
   <body>
     <h1>Anime Recommendations for User: {{ user_id }}</h1>
 
-    <ol>
-    {% for rec in recs %}
-      <li>{{ rec }}</li>
-    {% endfor %}
-    </ol>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Image</th>
+          <th class="anime_title">Anime Title</th>
+        </tr>
+      </thead>
+      {% for rec in recs %}
+      <tbody>
+        <tr>
+          <td>{{ loop.index0+1 }}</td>
+          <td>None</td>
+          <td class="anime_title">{{ rec }}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    <br>
 
     <form action="" method="post">
+      <p>Recommendation Type:</p>
       <!-- Default CSS slider with a width customization defined in my stylesheet -->
       <div class="slidecontainer">
         <input id="rec_slider" name="adventurous_level" type="range" min="0" max="2" value={{adventurous_level}} step="0.1" class="slider">

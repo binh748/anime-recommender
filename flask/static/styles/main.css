@@ -1,7 +1,37 @@
-body {
-  font-family: sans-serif;
+body.index {
+  font-family: Verdana, Geneva, sans-serif;
   font-size: large;
-  background-color: lightblue;
+  color: white;
+  background-image: url("../city_street_anime_background.jpg");
+  background-size: cover;
+}
+
+body.recommendation {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: large;
+  color: white;
+  background-image: url("../your_lie_in_april_original.jpg");
+  background-size: cover;
+}
+
+a:link {
+  color: black;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+a:active {
+  color: black;
+  text-decoration: underline;
 }
 
 input[type=text] {
@@ -103,7 +133,12 @@ th {
     text-align: center;
 }
 
+th.anime-title {
+  text-align: left;
+}
+
 td.anime-rank {
+  color: black;
   width: 5%;
 }
 

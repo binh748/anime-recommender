@@ -1,7 +1,47 @@
 """This module contains functions for the anime recommender system."""
+import numpy as np
 import pandas as pd
-# Considering using default variables for these functions by loading up
-# their pickles to avoid typing all the arguments each time
+from tqdm import tqdm
+
+def create_user_vector_df(user_anime_history_df_core, top_anime_df_core):
+    """Returns DataFrame of user vectors used in content-based filtering
+
+    User vectors are an average of anime vectors for anime user has watched.
+
+    Args:
+        user_anime_history_df_core: user_anime_history_df with 'user_id' and 'animelist_url'
+        columns dropped.
+        top_anime_df_core: top_anime_df with non-feature columns dropped.
+    """
+    # Create user vectors that are an average of the anime vectors that the user has rated
+    # (no dimensionality reduction)
+    num_features = top_anime_df_core.T.shape[0]
+    user_vectors = np.zeros((0, num_features))
+    for _, row in tqdm(user_anime_history_df_core.iterrows()):
+        # If there is at least one non-zero entry, then add features of all anime corresponding
+        # to non-zero entries to user_vector
+        if row.any():
+            # Initialize the user_vector as an empty 2d array where columns equals num_features
+            user_vector = np.zeros((0, num_features))
+            for i in range(len(row)):
+                if row[i] != 0:
+                    user_vector = np.concatenate(
+                        (user_vector,
+                         top_anime_df_core.T[i].values.reshape(1, num_features)),
+                        axis=0)
+            # Take average of features for each anime user has on their animelist
+            user_vector = user_vector.mean(axis=0).reshape(1, num_features)
+            user_vectors = np.concatenate((user_vectors, user_vector), axis=0)
+        else:
+            # If user has all zero entries (meaning user does not have
+            # any of the top 1000 anime in their animelist), add a feature vector of all zeros
+            # for that user
+            user_vectors = np.concatenate(
+                (user_vectors, np.zeros((1, num_features))), axis=0)
+    user_vector_df = pd.DataFrame(user_vectors)
+    # Set the columns to the anime feature names
+    user_vector_df.columns = top_anime_df_core.columns
+    return user_vector_df
 
 def get_user_scores(user_id, user_score_df):
     """Returns dictionary of all non-zero user scores, including

@@ -71,7 +71,7 @@ def create_soup_selenium(url, driver=driver):
 
 
 def get_animelist_data(user_id):
-    """Returns dictionary of data for user's animelist."""
+    """Returns dictionary of key data from user's animelist."""
     BASE_URL = 'https://myanimelist.net/animelist/'
     url = BASE_URL + user_id
     soup = create_soup_selenium(url, driver)
@@ -112,7 +112,7 @@ def get_animelist_scores(soup):
 
 
 def get_anime_data(mal_id):
-    """Returns dictionary of data for anime."""
+    """Returns dictionary of key data for anime."""
     BASE_URL = 'https://myanimelist.net/anime/'
     url = BASE_URL + str(mal_id)
     soup = create_soup(url)
@@ -338,7 +338,11 @@ def get_mal_user_ids(urls):
 
 
 def get_top_anime_mal_ids(num_top_anime=1000):
-    """Returns list of MyAnimeList anime IDs for anime listed on top anime pages."""
+    """Returns list of MyAnimeList anime IDs for anime listed on top anime pages.
+
+    Args:
+        num_top_anime: Number of top anime to scrape anime IDs for.
+    """
     jikan = Jikan()
     counter = 0
     mal_ids = []

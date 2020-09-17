@@ -4,7 +4,7 @@ For my [Metis](https://www.thisismetis.com/data-science-bootcamps) final project
 
 The recommender is deployed on a Flask app and allows users to choose how adventurous they want their recommendations to be. Setting the recommendation type to "more adventurous" on the app will place a greater weight on collaborative filtering recommendations and vice versa. By allowing the user to select their recommendation type, they can get recommendations that better fit their preferences. 
 
-*Images/data were sourced from the internet for educational purposes*
+*Images/data were sourced from the internet for educational purposes.*
 
 ## Table of Contents
 

@@ -1,4 +1,4 @@
-"""This is the main Python file to create the anime recommender system from scratch."""
+"""This is the main Python file to create the anime recommender system."""
 
 import time
 import pickle
@@ -11,28 +11,32 @@ from sklearn.metrics import pairwise_distances
 
 # These will be all the users included in my recommender system. In this project,
 # I got data on 120,000 users.
-base_url = 'https://myanimelist.net/users.php'
-mal_user_ids_urls = scrape.get_mal_user_ids_urls(base_url, num_users=240)
+BASE_URL = 'https://myanimelist.net/users.php'
+mal_user_ids_urls = scrape.get_mal_user_ids_urls(BASE_URL, num_users=240)
 user_ids = scrape.get_mal_user_ids(mal_user_ids_urls)
 
 # Scrape user animelists
+# NOTE: Running this will take a long time (multiple days on a single machine).
+# It's best to use a Docker container to deploy the web scraping script across 
+# multiple cloud instances (I used Google Cloud Compute Engine).
+# Please refer to my containers folder to see how I set up my Docker container
 for i in tqdm(range(1200)):
     animelist_data_100_chunk = Parallel(n_jobs=4, verbose=5) \
         (map(delayed(scrape.get_animelist_data), user_ids[i*100:i*100+100]))
     scrape.driver.quit()
     with open(f'../pickles/animelist_data_100_{i}.pkl', 'wb') as to_write:
         pickle.dump(animelist_data_100_chunk, to_write)
-    # Pause for 3 minutes to not ping the web server too much
+    # Pause for 3 minutes to let web server "rest"
     time.sleep(180)
 
-# Concatenating all the animelist_data_chunks into a complete_animelist
+# Concatenate all the animelist_data_chunks into a complete_animelist
 complete_animelist = []
 for i in tqdm(range(1200)):
     with open(f'../pickles/animelist_data_100_{i}.pkl', 'rb') as read_file:
         animelist_data_chunk = pickle.load(read_file)
     complete_animelist += animelist_data_chunk
 
-# Scrape data on 1,000 of top anime
+# Scrape data on 1,000 top anime on MyAnimeList
 mal_ids_top_1000_anime = scrape.get_top_anime_mal_ids(num_top_anime=1000)
 top_anime_data_1000 = [
     scrape.get_animelist_data(user_id) for user_id in tqdm(mal_ids_top_1000_anime)
@@ -52,7 +56,8 @@ top_anime_df = dc.clean_top_anime_data_1000_df(top_anime_data_1000_df)
 
 #####COLLABORATIVE FILTERING RECOMMENDER#####
 
-# Use NMF to create user/a/nime embeddings for collaborative-filtering
+# Use NMF (non-negative matrix factorization) to create user/a/nime embeddings
+# for collaborative-filtering
 nmf = NMF(n_components=6, max_iter=500, random_state=4444)
 user_embedding = nmf.fit_transform(user_score_df.drop(columns=['user_id', 'animelist_url']))
 
@@ -60,7 +65,7 @@ user_embedding_df = pd.DataFrame(user_embedding.round(2))
 anime_embedding_df = pd.DataFrame(nmf.components_.round(2),
                                   columns=anime_titles)
 
-# Find indices for top X anime with highest weights for each feature
+# Find indices for top X number of anime with highest weights for each feature
 top_anime_indices = nmf.components_.argsort(axis=1)[:, -1:-11:-1]
 top_anime_per_feature = [[anime_titles[idx] for idx in idx_list] for idx_list in top_anime_indices]
 

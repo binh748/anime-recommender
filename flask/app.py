@@ -31,8 +31,6 @@ def recommendation(user_id, adventurous_level):
         for anime_title in recs
     ]
 
-    # Need to create a list of dicts to store anime_title and image_url
-    # and then pass list of dicts into render_template to display anime title and image
     return render_template('recommendation.html', recs=recs_dicts, user_id=user_id,
                            adventurous_level=adventurous_level)
 

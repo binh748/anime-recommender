@@ -38,8 +38,8 @@ The recommender is deployed on a Flask app and allows users to choose how advent
 
 1. Clone this repo.
 2. Run anime_recommender.py (may take a while due to web scraping, hence better to use a Docker container to deploy web scraper across multiple cloud instances).
-    * If you want to scrape using the cloud, use Dockerfile in containers/container1 directory.
-3. Run app.py in flask directory to start Flask app locally on your machine. 
+    * If you want to scrape using the cloud, use Dockerfile in containers/container_1 directory.
+3. Run app.py in flask directory to view Flask app.  
 
 ## Metis 
 

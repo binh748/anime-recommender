@@ -9,6 +9,7 @@ The recommender is deployed on a Flask app and allows users to choose how advent
 ## Table of Contents
 
 * [Screenshots](#screenshots)
+* [Features](#features) 
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Metis](#metis)
@@ -17,6 +18,10 @@ The recommender is deployed on a Flask app and allows users to choose how advent
 
 ![Flask home page](https://user-images.githubusercontent.com/62628676/93408976-d78cc880-f863-11ea-9978-c921b2a56945.png)
 ![Flask recommender page](https://user-images.githubusercontent.com/62628676/93409135-33efe800-f864-11ea-9c10-0396cda3428d.png)
+
+## Features
+
+* Get anime recommendations for a MyAnimeList user ID **(only works on anime and user IDs scraped from MyAnimeList.net)** 
 
 ## Technologies
 

@@ -322,7 +322,7 @@ def get_mal_user_ids(urls):
     """Returns list of MyAnimeList user IDs.
 
     Args:
-        urls = List of MyAnimeList URLs containing user IDs.
+        urls: List of MyAnimeList URLs containing user IDs.
     """
     user_ids = []
     page_counter = 0

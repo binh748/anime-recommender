@@ -28,9 +28,11 @@ def fix_mismatching_animelist_len(complete_animelist):
 
     return complete_animelist
 
+
 def create_user_score_dicts(complete_animelist, top_1000_anime_titles):
-    """Returns list of dicts where there is a key-value pair for every anime title in
-    top_1000_anime_titles and the user's corresponding score or 0 if user did not score.
+    """Returns list of dicts. Each dict has a key-value pair for every anime title in
+    top_1000_anime_titles (key) and the user's corresponding score (value) or 0
+    if user did not score.
 
     This sets up the user-ratings matrix for collaborative filtering.
 
@@ -72,8 +74,8 @@ def create_user_anime_history_df(user_score_dicts_top_1000_anime, top_1000_anime
 
     Args:
         user_score_dicts_top_1000_anime: List of dicts where there is a key-value
-        pair for every anime title in top_1000_anime_titles and the user's
-        corresponding score or 0 if user did not score.
+            pair for every anime title in top_1000_anime_titles and the user's
+            corresponding score or 0 if user did not score.
         top_1000_anime_titles: List of top 1000 anime titles on MyAnimeList.net.
     """
     user_anime_history_df = pd.DataFrame(user_score_dicts_top_1000_anime)
@@ -94,7 +96,7 @@ def clean_user_anime_history_df(user_anime_history_df, top_1000_anime_titles):
 
     Args:
         user_anime_history_df: DataFrame of user's anime viewing history where
-        the entries 1 = watched and 0 = not watched.
+            the entries 1 = watched and 0 = not watched.
         top_1000_anime_titles: List of top 1000 anime titles on MyAnimeList.net.
     """
     # Convert all columns (excluding user_id and animelist_url columns) to numeric dtype
@@ -109,14 +111,15 @@ def create_user_score_df(user_score_dicts_top_1000_anime):
 
     Args:
         user_score_dicts_top_1000_anime: List of dicts where there is a key-value
-        pair for every anime title in top_1000_anime_titles and the user's
-        corresponding score or 0 if user did not score.
+            pair for every anime title in top_1000_anime_titles and the user's
+            corresponding score or 0 if user did not score.
     """
     user_score_df = pd.DataFrame(user_score_dicts_top_1000_anime)
     return user_score_df
 
 def clean_user_score_df(user_score_df, top_1000_anime_titles):
-    """Returns cleaned user_score_df for NMF in collaborative filtering.
+    """Returns cleaned user_score_df for NMF (non-negative matrix factorization)
+    in collaborative filtering.
 
     Args:
         user_score_df: User-rating matrix.

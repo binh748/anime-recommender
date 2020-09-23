@@ -4,13 +4,13 @@ import pandas as pd
 from tqdm import tqdm
 
 def create_user_vector_df(user_anime_history_df_core, top_anime_df_core):
-    """Returns DataFrame of user vectors used in content-based filtering
+    """Returns DataFrame of user vectors used in content-based filtering.
 
     User vectors are an average of anime vectors for anime user has watched.
 
     Args:
         user_anime_history_df_core: user_anime_history_df with 'user_id' and 'animelist_url'
-        columns dropped.
+            columns (non-features) dropped.
         top_anime_df_core: top_anime_df with non-feature columns dropped.
     """
     # Create user vectors that are an average of the anime vectors that the user has rated
@@ -44,7 +44,7 @@ def create_user_vector_df(user_anime_history_df_core, top_anime_df_core):
     return user_vector_df
 
 def get_user_scores(user_id, user_score_df):
-    """Returns dictionary of all non-zero user scores, including
+    """Returns dict of all non-zero user scores, including
     user/animelist metadata.
 
     Args:
@@ -60,16 +60,16 @@ def get_user_scores(user_id, user_score_df):
 
 
 def get_user_anime_history(user_id, user_anime_history_df):
-    """Returns dictionary of all non-zero entries, including
+    """Returns dict of all non-zero entries, including
     user/animelist metadata.
 
-    A non-zero entry indicates that that anime is on the user's
+    A non-zero entry indicates that that anime is on user's
     animelist.
 
     Args:
         user_id: MyAnimeList user ID.
         user_anime_history_df: DataFrame of user's anime viewing history where
-        the entries 1 = watched and 0 = not watched.
+            entries 1 = watched and 0 = not watched.
     """
     user_idx = get_user_idx(user_id, user_anime_history_df)
     user_anime_history_dict = {}
@@ -80,7 +80,7 @@ def get_user_anime_history(user_id, user_anime_history_df):
 
 
 def get_user_idx(user_id, user_df):
-    """Returns the index of the user from a df with user data.
+    """Returns the index of the user from a DataFrame with user data.
 
     Args:
         user_id: MyAnimeList user ID.
@@ -96,7 +96,7 @@ def get_collab_filt_recs(user_id, dist_matrix,
     Args:
         user_id: MyAnimeList user ID.
         dist_matrix: Pairwise distance matrix between user embeddings
-        and anime embeddings.
+            and anime embeddings.
         anime_titles: List of anime titles considered in recommender system.
         user_score_df: User-rating matrix.
         num_recs: Number of recommendations.
@@ -120,10 +120,10 @@ def get_content_filt_recs(user_id, dist_matrix,
     Args:
         user_id: MyAnimeList user ID.
         dist_matrix: Pairwise distance matrix between user embeddings
-        and anime embeddings.
+            and anime embeddings.
         anime_titles: List of anime titles considered in recommender system.
-        user_anime_history_df: DataFrame of user's anime viewing history where
-        the entries 1 = watched and 0 = not watched.
+            user_anime_history_df: DataFrame of user's anime viewing history where
+            the entries 1 = watched and 0 = not watched.
         num_recs: Number of recommendations.
     """
     user_idx = get_user_idx(user_id, user_anime_history_df)
@@ -141,8 +141,8 @@ def combine_double_recs(recs_df):
     """Returns recs_df after double anime recommendations have been combined.
 
     Args:
-        recs_df = DataFrame of recommendations from content-based and collaborative
-        filtering.
+        recs_df: DataFrame of recommendations from content-based and collaborative
+            filtering.
     """
     # Get list of all double anime recommendations (i.e. where collaborative and content-based
     # filtering recommend the same anime)
@@ -168,18 +168,18 @@ def recommend(user_id, user_anime_cosine_distances_content,
     Args:
         user_id: MyAnimeList user ID.
         user_anime_cosine_distances_content: Using content-based filtering embeddings,
-        pairwise cosine distance matrix between user embeddings and anime embeddings.
+            pairwise cosine distance matrix between user embeddings and anime embeddings.
         user_anime_cosine_distances_collab: Using collaborative filtering embeddings,
-        pairwise cosine distance matrix between user embeddings and anime embeddings.
+            pairwise cosine distance matrix between user embeddings and anime embeddings.
         user_score_df: User-rating matrix.
         user_anime_history_df: DataFrame of user's anime viewing history where
-        the entries 1 = watched and 0 = not watched.
+            the entries 1 = watched and 0 = not watched.
         anime_titles: List of anime titles considered in recommender system.
-        collab_weight = Weight applied to collaborative filtering scores.
+            collab_weight = Weight applied to collaborative filtering scores.
         num_recs: Number of recommendations.
     Returns:
         recs: Recommendations as a list of anime where the list length equals
-        the parameter num_recs. List is sorted with top recommendations first.
+            the parameter num_recs. List is sorted with top recommendations first.
         recs_df: DataFrame of recommendations with details.
     """
     rec_dicts = []

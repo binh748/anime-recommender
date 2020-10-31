@@ -16,7 +16,7 @@ The recommender is deployed on a Flask app and allows users to choose how advent
 
 ## Screenshots
 
-![Flask home page](https://user-images.githubusercontent.com/62628676/93408976-d78cc880-f863-11ea-9978-c921b2a56945.png)
+![Flask home page](https://user-images.githubusercontent.com/62628676/97792286-b8978b00-1bb2-11eb-8a9d-7df79a578d28.png)
 ![Flask recommender page](https://user-images.githubusercontent.com/62628676/93409135-33efe800-f864-11ea-9c10-0396cda3428d.png)
 
 ## Features

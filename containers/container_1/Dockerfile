@@ -1,10 +1,10 @@
-# Use the official Python image.
+# Use official Python image
 # https://hub.docker.com/_/python
 FROM python:3.7
 
 WORKDIR /usr/src/app
 
-# Install manually all the missing libraries
+# Install missing packages
 RUN apt-get update
 RUN apt-get install -y wget gconf-service libasound2 libatk1.0-0 libcairo2 libcups2 libfontconfig1 libgdk-pixbuf2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libxss1 fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils
 
@@ -16,13 +16,13 @@ RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-# Make a pickles directory to store my pickles
+# Make pickles directory to store pickles
 RUN mkdir /usr/src/app/pickles
 
-# Copy local code to the container image
+# Copy local code to container image
 COPY main.py ./
 COPY scrape.py ./
 COPY user_ids_to_rescrape.pkl ./
 
-# Run my script when I run Dockerfile
+# Run script when I run container
 CMD [ "python", "./main.py" ]

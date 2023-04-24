@@ -1,0 +1,6 @@
+beautifulsoup4==4.9.1
+selenium==3.141.0
+tqdm==4.47.0
+joblib==1.2.0
+chromedriver-binary==85.0.4183.87.0
+html5lib==1.1
